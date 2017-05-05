@@ -138,18 +138,24 @@ public class MySQL
 	private static void performDelete(Connection connection) throws SQLException
 	{
 		Scanner scan = new Scanner(System.in);
-		int id = scan.nextInt();;
-		String query = "DELETE FROM Directs WHERE SUID = ?";
-
+		System.out.println("Enter an SUID: ");
+		int id = scan.nextInt();
+		System.out.println("Enter a year: ");
+		int year = scan.nextInt();
+		System.out.println("Enter a season: ");
+		String season = scan.next();
+		String query = "DELETE FROM Directs WHERE SUID = ? AND Year = ? AND Season = ?";
 
 		PreparedStatement preparedStmt = connection.prepareStatement(query);
 		preparedStmt.setInt(1, id);
+		preparedStmt.setInt(2, year);
+		preparedStmt.setString(3, season);
 		int rowsAffected = preparedStmt.executeUpdate();
 		if(rowsAffected <= 0)
 		{
-			System.out.println(id+" does not exist");
+			System.out.println("row that meets all criteria does not exist");
 		}
-
+		scan.close();
 	}
 
 	public static void main(String args[]) throws SQLException
@@ -171,7 +177,7 @@ public class MySQL
 			Scanner scan = new Scanner(System.in);
 			System.out.println("1: Enter a SELECT statement.\n" +
 							"2: Enter a INSERT INTO statement.\n" +
-							"3: (Delete) Make it as if a student has never directed an orientation program.\n" +
+							"3: (Delete) Make it as if a student has never directed a specific orientation program.\n" +
 							"4: To exit program.\n" +
 							"Enter a number to execute command: ");
 			int action = scan.nextInt();
