@@ -52,8 +52,20 @@ public class MySQL
 
 	}
 
-	private static void performDelete(Connection connection)
+	private static void performDelete(Connection connection) throws SQLException
 	{
+		Scanner scan = new Scanner(System.in);
+		int id = scan.nextInt();;
+		String query = "DELETE FROM Directs WHERE SUID = ?";
+
+
+		PreparedStatement preparedStmt = connection.prepareStatement(query);
+		preparedStmt.setInt(1, id);
+		int rowsAffected = preparedStmt.executeUpdate();
+		if(rowsAffected <= 0)
+		{
+			System.out.println(id+" does not exist");
+		}
 
 	}
 
@@ -76,7 +88,7 @@ public class MySQL
 			Scanner scan = new Scanner(System.in);
 			System.out.println("1: Enter a SELECT statement.\n" +
 							"2: Enter a INSERT INTO statement.\n" +
-							"3: Enter a DELETE statement.\n" +
+							"3: (Delete) Make it as if a student has never directed an orientation program.\n" +
 							"4: To exit program.\n" +
 							"Enter a number to execute command: ");
 			int action = scan.nextInt();
