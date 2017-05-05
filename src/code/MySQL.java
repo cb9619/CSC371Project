@@ -49,6 +49,40 @@ public class MySQL
 
 	private static void performInsert(Connection connection)
 	{
+		boolean run = true;
+		Scanner scan = new Scanner(System.in);
+		while(run)
+		{
+			System.out.println("1: Yes\n" + "2: No\n" + "A row?");
+			int action = scan.nextInt();
+			if (action == 1)
+			{
+				System.out.println("Enter an SUID in the format: #########: ");
+				int SUID = scan.nextInt();
+				System.out.println("Enter a name: ");
+				String name = scan.next();
+				System.out.println("Enter a last name: ");
+				String last = scan.next();
+				System.out.println("Enter an email in the format cc####: ");
+				String email = scan.next();
+
+				try
+				{
+					Statement stmt = connection.createStatement();
+					String input = "('" + SUID + "', '" + name + "', '" + last + "', '" + email+ "')";
+					String query = "INSERT INTO Professional (SUID, FirstName, LastName, Email) VALUES " + input;
+					int nrows = stmt.executeUpdate(query);
+					stmt.close();
+				} catch (SQLException e) {
+					System.out.println("Error inserting into table: Duplicate key");
+				}
+			}
+			else if (action == 2)
+			{
+				run = false;
+			}
+
+		}
 
 	}
 
@@ -59,12 +93,13 @@ public class MySQL
 
 	public static void main(String args[]) throws SQLException
 	{
-		try {
+		try
+		{
 			Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e)
-			{
+		} catch (ClassNotFoundException e)
+		{
 			System.out.println ("Could not load driver.\n");
-			}
+		}
 		boolean run = true;
 		String url = "jdbc:mysql://db.cs.ship.edu/csc371-15";
 		String username = "csc371-15";
