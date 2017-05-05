@@ -59,10 +59,16 @@ public class MySQL
 
 	public static void main(String args[]) throws SQLException
 	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e)
+			{
+			System.out.println ("Could not load driver.\n");
+			}
 		boolean run = true;
-		String url = "jdbc:mysql://db.cs.ship.edu/CHRISNAME";
-		String username = "CHRIS";
-		String password = "CHRIS";
+		String url = "jdbc:mysql://db.cs.ship.edu/csc371-15";
+		String username = "csc371-15";
+		String password = "12345";
 		Connection connection = DriverManager.getConnection(url, username, password);
 
 		while(run)
