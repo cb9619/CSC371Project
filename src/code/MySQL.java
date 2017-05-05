@@ -116,7 +116,6 @@ public class MySQL
 		String query = "SELECT " + column +
 						" FROM " + table +
 						"WHERE gpa >= 3.00";
-		System.out.println(query);
 		rs = statement.executeQuery(query);
 		System.out.println(column);
 		System.out.println("=====================================================");
@@ -171,6 +170,7 @@ public class MySQL
 
 	private static void performDelete(Connection connection) throws SQLException
 	{
+		System.out.println("Enter the key of the entity you want to delete.");
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter an SUID: ");
 		int id = scan.nextInt();
@@ -189,7 +189,7 @@ public class MySQL
 		{
 			System.out.println("row that meets all criteria does not exist");
 		}
-		scan.close();
+
 	}
 
 	public static void main(String args[]) throws SQLException
