@@ -10,9 +10,10 @@ public class MySQL
 		Statement statement = connection.createStatement();
 		Scanner scan = new Scanner(System.in);
 		boolean run = true;
-		String table = "Applicant";
+		String table = "Applicant ";
 		String column = null;
 		ResultSet rs;
+		int count = 0;
 
 		while(run)
 		{
@@ -20,6 +21,10 @@ public class MySQL
 			int action = scan.nextInt();
 			if(action == 1)
 			{
+				if(count > 0)
+				{
+					column = column + ", ";
+				}
 				System.out.println("1: SUID\n" +
 									"2: FirstName\n" +
 									"3: LastName\n" +
@@ -29,9 +34,77 @@ public class MySQL
 									"7: IsHired\n" +
 									"8: StudentId\n" +
 									"Enter a column you would like to see the result of: ");
-				int count = 0;
-				int columns[] = null;
-				columns[count] = scan.nextInt();
+				int value = scan.nextInt();
+				if(column == null)
+				{
+					if(value == 1)
+					{
+						column = "SUID";
+					}
+					else if(value == 2)
+					{
+						column = "FirstName";
+					}
+					else if(value == 3)
+					{
+						column = "LastName";
+					}
+					else if(value == 4)
+					{
+						column = "Email";
+					}
+					else if(value == 5)
+					{
+						column = "gpa";
+					}
+					else if(value == 6)
+					{
+						column = "Major";
+					}
+					else if(value == 7)
+					{
+						column = "IsHired";
+					}
+					else
+					{
+						column = "StudentId";
+					}
+				}
+				else
+				{
+					if(value == 1)
+					{
+						column = column + "SUID";
+					}
+					else if(value == 2)
+					{
+						column = column + "FirstName";
+					}
+					else if(value == 3)
+					{
+						column = column + "LastName";
+					}
+					else if(value == 4)
+					{
+						column = column + "Email";
+					}
+					else if(value == 5)
+					{
+						column = column + "gpa";
+					}
+					else if(value == 6)
+					{
+						column = column + "Major";
+					}
+					else if(value == 7)
+					{
+						column = column + "IsHired";
+					}
+					else
+					{
+						column = column + "StudentId";
+					}
+				}
 				count++;
 			}
 			else
@@ -40,11 +113,21 @@ public class MySQL
 			}
 		}
 
-		//need to loop through and figure out the columns the user wants
-
 		String query = "SELECT " + column +
-						"FROM " + table +
+						" FROM " + table +
 						"WHERE gpa >= 3.00";
+		System.out.println(query);
+		rs = statement.executeQuery(query);
+		System.out.println(column);
+		System.out.println("=====================================================");
+		while(rs.next())
+		{
+			for(int i = 1; i <= count; i++)
+			{
+				System.out.print(rs.getString(i) + " ");
+			}
+			System.out.print("\n");
+		}
 	}
 
 	private static void performInsert(Connection connection)
