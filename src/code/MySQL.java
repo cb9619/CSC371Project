@@ -3,8 +3,20 @@ package code;
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * MySQL.java
+ * 
+ * Runs the database interface.
+ * 
+ * @author Christopher Boyer, Emmanuel Douge, Jason LoBianco
+ */
 public class MySQL
 {
+	/**
+	 * Run the select interface. Prompts the user for selecting from the applicant table.
+	 * @param connection	the database connection
+	 * @throws SQLException	thrown then there's an error in the sql statement
+	 */
 	private static void performSelect(Connection connection) throws SQLException
 	{
 		Statement statement = connection.createStatement();
@@ -129,6 +141,10 @@ public class MySQL
 		}
 	}
 
+	/**
+	 * Perform an insert into the Professional table.
+	 * @param connection	the connection to the database.
+	 */
 	private static void performInsert(Connection connection)
 	{
 		boolean run = true;
@@ -168,6 +184,11 @@ public class MySQL
 
 	}
 
+	/**
+	 * Delete a row from the Directs table.
+	 * @param connection	the connection to the Directs table
+	 * @throws SQLException	throws if there's an error in the sql statment
+	 */
 	private static void performDelete(Connection connection) throws SQLException
 	{
 		System.out.println("Enter the key of the entity you want to delete.");
@@ -192,8 +213,14 @@ public class MySQL
 
 	}
 
+	/**
+	 * Main mathod of execution.
+	 * @param args
+	 * @throws SQLException
+	 */
 	public static void main(String args[]) throws SQLException
 	{
+		// load the driver
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
